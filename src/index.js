@@ -11,7 +11,7 @@ import { dirname } from 'path';
 // Configuração do ambiente
 dotenv.config();
 
-// Variáveis para o caminho do arquivo
+// Caminho do arquivo
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -20,12 +20,12 @@ const app = express();
 
 // Configuração de CORS
 const corsOptions = {
-  origin: '*', // Permite todas as origens (ajuste conforme necessário)
+  origin: '*', 
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Aplica CORS ao Express
+// Aplica CORS
 app.use(cors(corsOptions));
 
 // Middleware para parsing de JSON
@@ -40,7 +40,7 @@ app.use('/', authRoutes);
 // Criação do servidor HTTP e do Socket.IO
 const server = createServer(app);
 const io = new Server(server, {
-  cors: corsOptions, // Usando a mesma configuração de CORS para o Socket.IO
+  cors: corsOptions,
 });
 
 // Mapeamento dos usuários conectados
@@ -50,13 +50,11 @@ const users = new Map();
 io.on('connection', (socket) => {
   console.log('User connected');
 
-  // Evento de entrada de usuário
   socket.on('join', (username) => {
     users.set(socket.id, username);
     io.emit('userJoined', { username, users: Array.from(users.values()) });
   });
 
-  // Evento de recebimento de mensagem
   socket.on('message', (data) => {
     const username = users.get(socket.id);
     io.emit('message', {
@@ -66,7 +64,6 @@ io.on('connection', (socket) => {
     });
   });
 
-  // Evento de desconexão
   socket.on('disconnect', () => {
     const username = users.get(socket.id);
     users.delete(socket.id);
@@ -75,8 +72,8 @@ io.on('connection', (socket) => {
   });
 });
 
-// Iniciar o servidor na porta configurada
-const port = process.env.PORT || 5000;  // Caso a variável de ambiente PORT não seja encontrada, usa a 5000
+// Iniciar o servidor
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
