@@ -20,10 +20,12 @@ const app = express();
 
 // Configuração de CORS
 const corsOptions = {
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: '*', // Permite todas as origens (ajuste conforme necessário)
+  methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
+// Aplica CORS ao Express
 app.use(cors(corsOptions));
 
 // Middleware para parsing de JSON
@@ -38,10 +40,7 @@ app.use('/', authRoutes);
 // Criação do servidor HTTP e do Socket.IO
 const server = createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: "*", 
-    methods: ["GET", "POST"],
-  },
+  cors: corsOptions, // Usando a mesma configuração de CORS para o Socket.IO
 });
 
 // Mapeamento dos usuários conectados
