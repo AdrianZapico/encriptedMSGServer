@@ -13,15 +13,15 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,  // Adicionei o name como obrigatório
+    required: true,  
   },
   avatar: {
-    type: String,  // Adicionei avatar para armazenar o link
+    type: String, 
     default: '',
   },
 });
 
-// Antes de salvar o usuário, criptografa a senha
+
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
@@ -29,7 +29,7 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// Método para comparar a senha informada com a senha criptografada
+
 userSchema.methods.matchPassword = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
