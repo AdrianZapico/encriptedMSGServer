@@ -77,5 +77,7 @@ io.on('connection', (socket) => {
 });
 
 // Iniciar o servidor na porta configurada
-const port = process.env.PORT || 5000;
-server.listen(port, () => console.log(`Server running on port ${port}`));
+const port = process.env.PORT || 5000;  // Caso a variável de ambiente PORT não seja encontrada, usa a 5000
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
