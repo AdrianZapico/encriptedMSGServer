@@ -13,8 +13,7 @@
     "encriptedMSG": "file:",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.2",
-    "todoappserver": "file:"
+    "mongoose": "^8.9.2"
   },
   "devDependencies": {
     "typescript": "^5.7.2"
