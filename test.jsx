@@ -1,47 +1,21 @@
 import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import authRoutes from './routes/auth.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 
-// Configuração do ambiente
-dotenv.config();
-
-// Variáveis para o caminho do arquivo
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Inicializa o app express
 const app = express();
-
-// Configuração de CORS
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
-
-// Middleware para parsing de JSON
-app.use(express.json());
-
-// Conectar ao banco de dados
-connectDB();
-
-// Rotas de autenticação
-app.use('/', authRoutes);
-
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Ajuste conforme necessário
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"]
   }
 });
+
 const users = new Map();
 
 io.on('connection', (socket) => {
@@ -69,8 +43,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
