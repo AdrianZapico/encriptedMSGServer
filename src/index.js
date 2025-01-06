@@ -20,7 +20,7 @@ const app = express();
 
 // Configuração de CORS
 const corsOptions = {
-  origin: 'https://encripted-chat-ts.netlify.app/',
+  origin: 'https://encripted-chat-ts.netlify.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
@@ -38,7 +38,7 @@ app.use('/', authRoutes);
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://encripted-chat-ts.netlify.app/", // Ajuste conforme necessário
+    origin: "https://encripted-chat-ts.netlify.app", // Ajuste conforme necessário
     methods: ["GET", "POST"]
   }
 });
